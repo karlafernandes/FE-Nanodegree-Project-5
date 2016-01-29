@@ -8,3 +8,17 @@ body {
 #map { 
 	height: 100%;
 }
+
+h2.title {
+	color: #30a812;
+	font-size: 22px;
+	font-weight: bold;
+}
+
+p.description {
+	color: #666;
+}
+
+a.site {
+	color: #333;
+}
