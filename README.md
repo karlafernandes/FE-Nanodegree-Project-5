@@ -29,11 +29,11 @@ Single page application featuring a map of a neighborhood, which has additional 
 ## Helpful Resources
 None of these are required, but they may be helpful.
 
-[Foursquare API](https://developer.foursquare.com/start)
-[MediaWikiAPI for Wikipedia](http://www.mediawiki.org/wiki/API:Main_page)
-[Google Maps Street View Service](https://developers.google.com/maps/documentation/javascript/streetview)
-[Google Maps](https://developers.google.com/maps/documentation/)
-[Project 5 Overview WebCast](https://github.com/udacity/fend-office-hours/tree/master/Javascript%20Design%20Patterns/P5%20Project%20Overview)
-[Knockout JS Tutorials](http://learn.knockoutjs.com/)
-[Todo MVC Knockout Example](http://todomvc.com/examples/knockoutjs/)
+- [Foursquare API](https://developer.foursquare.com/start)
+- [MediaWikiAPI for Wikipedia](http://www.mediawiki.org/wiki/API:Main_page)
+- [Google Maps Street View Service](https://developers.google.com/maps/documentation/javascript/streetview)
+- [Google Maps](https://developers.google.com/maps/documentation/)
+- [Project 5 Overview WebCast](https://github.com/udacity/fend-office-hours/tree/master/Javascript%20Design%20Patterns/P5%20Project%20Overview)
+- [Knockout JS Tutorials](http://learn.knockoutjs.com/)
+- [Todo MVC Knockout Example](http://todomvc.com/examples/knockoutjs/)
 

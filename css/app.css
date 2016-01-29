@@ -9,16 +9,16 @@ body {
 	height: 100%;
 }
 
-h2.title {
+.title {
 	color: #30a812;
 	font-size: 22px;
 	font-weight: bold;
 }
 
-p.description {
+.description {
 	color: #666;
 }
 
-a.site {
+.site {
 	color: #333;
 }
