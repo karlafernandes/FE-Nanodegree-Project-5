@@ -36,23 +36,3 @@ body {
 	margin-top: 10px;
 	border-top: 5px solid #30a812;
 }
-
-#buttons {
-	position: absolute;
-	top: 50px;
-	z-index: 1000;
-}
-
-#listButtons {
-	position: absolute;
-	top: 50px;
-	z-index: 1000;	
-	width: 200px;
-}
-
-.btn {
-	width: 200px;
-	display:block !important;
-	clear: both;
-}
-

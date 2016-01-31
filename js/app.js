@@ -139,19 +139,45 @@ function initMap() {
 		*/
 		
 		var itemSelected = null;
-
-		var itemList = document.createElement('a');
+		var listButtons = document.getElementById("listButtons");
+				
+		var itemList = document.createElement('li');
+		itemList.id = 'list-'+escapeRooms[i].id;
+		
+		var itemListA = document.createElement("a");
+        itemListA.textContent = escapeRooms[i].name;
+        
+		var itemListB = document.createElement("li");
+        itemListB.classList.add('divider');
+		
+		itemList.appendChild(itemListA);
+		
+		/*
+		var node = document.createElement("li");
+		
+		var itemList = document.createElement("a");
         itemList.textContent = escapeRooms[i].name;
 		itemList.id = 'list'+escapeRooms[i].id;
 		itemList.classList.add('list-group-item');
 		
+		node.appendChild(itemList); 
+		document.getElementById("myList").appendChild(node);
+		*/
+		
+		/*
+        itemList.textContent = escapeRooms[i].name;
+		itemList.id = 'list'+escapeRooms[i].id;
+		itemList.classList.add('list-group-item');
+		*/
+		
+		var itemSelected = null;
 		
         itemList.addEventListener('click', (function(currentMarker, infoWindowCopy){
         	return function(){
 				if (itemSelected !== null) {
 					itemSelected.classList.remove('active');
 				}
-				itemSelected = document.getElementById('list'+currentMarker.id);
+				itemSelected = document.getElementById('list-'+currentMarker.id);
 				itemSelected.classList.add('active');
 				
           		closeDetails();
@@ -163,6 +189,7 @@ function initMap() {
 
         // finally, add the element to the list
         this.listButtons.appendChild(itemList);
+        this.listButtons.appendChild(itemListB);
 
 
 
@@ -192,7 +219,7 @@ function initMap() {
 				if (itemSelected !== null) {
 					itemSelected.classList.remove('active');
 				}
-				itemSelected = document.getElementById('list'+currentMarker.id);
+				itemSelected = document.getElementById('list-'+currentMarker.id);
 				itemSelected.classList.add('active');
 				console.log("E " + itemSelected);
 				
