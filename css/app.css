@@ -13,12 +13,46 @@ body {
 	color: #30a812;
 	font-size: 22px;
 	font-weight: bold;
+	margin: 0 0 10px 0;
 }
 
-.description {
-	color: #666;
+.phone,
+.site {
+	padding: 0;
+	margin: 0 0 5px 0;
+	display: block;
+}
+
+.phone {
+	color: #666 !important;
+	text-decoration: none !important;
 }
 
 .site {
 	color: #333;
 }
+
+.infoWindow img {
+	margin-top: 10px;
+	border-top: 5px solid #30a812;
+}
+
+#buttons {
+	position: absolute;
+	top: 50px;
+	z-index: 1000;
+}
+
+#listButtons {
+	position: absolute;
+	top: 50px;
+	z-index: 1000;	
+	width: 200px;
+}
+
+.btn {
+	width: 200px;
+	display:block !important;
+	clear: both;
+}
+

@@ -9,13 +9,17 @@
 
 	<title>Escape Rooms in Istanbul</title>
 	<link rel="stylesheet" href="css/app.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
 	<link rel="apple-touch-icon" href="images/brand_icon.jpg" />
 </head>
 <body>
 	
+	<div id="buttons"></div>
+	<div id="listButtons" class="list-group"></div>
 	<div id="map"></div>
 	
+	<!-- script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script -->
     <script src="js/knockout-3.2.0.js"></script>	
 	<script src="js/app.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAy_VQHt28lbfAb2I7r0qqsbL7B69Mroag&callback=initMap" async defer></script>
