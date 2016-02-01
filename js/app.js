@@ -95,37 +95,39 @@ var escapeRooms = [
     }
 ]
 
-var createMarker = function (data) {
+var createMarker = function (marker) {
     this.marker = new google.maps.Marker({
-        id: data.id,
-        position: new google.maps.LatLng(data.coordinates.lat, data.coordinates.lng),
+        id: marker.id,
+        position: new google.maps.LatLng(marker.coordinates.lat, marker.coordinates.lng),
         map: map,
-        title: data.name,
+        title: marker.name,
         animation: google.maps.Animation.DROP,
         icon: "images/marker.png"
     });
-    createInfoWindow(data);
+    createInfoWindow(marker);
 }
 
-var createInfoWindow = function (data) {
-    var position = new google.maps.LatLng({lat: data.coordinates.lat, lng: data.coordinates.lng});
+var createInfoWindow = function (marker) {
+    var position = new google.maps.LatLng({lat: marker.coordinates.lat, lng: marker.coordinates.lng});
 
-    this.phone = "<a href='tel:" + data.phone + "' target='_top' class='phone'>" + data.phone + "</a>";
-    this.site = "<a href='" + data.site + "' target='_blank' class='site'>" + data.site + "</a>";
-    this.streetView = "https://maps.googleapis.com/maps/api/streetview?size=280x100&location=" + data.coordinates.lat + ", " + data.coordinates.lng + "&heading=100&pitch=28&scale=2";
+    this.phone = "<a href='tel:" + marker.phone + "' target='_top' class='phone'>" + marker.phone + "</a>";
+    this.site = "<a href='" + marker.site + "' target='_blank' class='site'>" + marker.site + "</a>";
+    this.streetView = "https://maps.googleapis.com/maps/api/streetview?size=280x100&location=" + marker.coordinates.lat + ", " + marker.coordinates.lng + "&heading=100&pitch=28&scale=2";
 
     infoWindow = new google.maps.InfoWindow({
-        content: "<div class='infoWindow'><h2 class='title'>" + data.name + "</h2>" + this.phone + this.site + "<img src='" + this.streetView + "' /></div>",
-        position: {lat: (data.coordinates.lat + 0.0065), lng: data.coordinates.lng}
+        content: "<div class='infoWindow'><h2 class='title'>" + marker.name + "</h2>" + this.phone + this.site + "<img src='" + this.streetView + "' /></div>",
+        position: {lat: (marker.coordinates.lat + 0.0065), lng: marker.coordinates.lng}
     });
 
+	//marker.setAnimation(google.maps.Animation.BOUNCE);
     return infoWindow;
 }
 
 var createMap = function (idMap, centerMap) {
     this.map = new google.maps.Map(document.getElementById(idMap, centerMap), {
         zoom: 13,
-        center: centerMap
+        center: centerMap,
+		mapTypeControl: false
     });
 };
 
@@ -164,9 +166,7 @@ var ViewModel = function () {
         itemSelected2 = document.getElementById('list2-' + marker.id);
         itemSelected2.classList.add('active');
 
-        console.log(marker);
         createInfoWindow(marker).open(map);
-        //marker.setAnimation(google.maps.Animation.BOUNCE);
     };
 
     this.searchMarkers = function () {
