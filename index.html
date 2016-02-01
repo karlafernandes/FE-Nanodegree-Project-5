@@ -29,26 +29,26 @@
 						<a class="navbar-brand" href="#">Escape Rooms in Istanbul</a>
 					</div>
 					<div id="navbar" class="navbar-collapse collapse">
-						<form class="navbar-form navbar-right form-group">
-							<input type="search" id="search-markers" class="form-control" placeholder="Search by name...">
-						</form>
-						<ul id="formList" class="nav navbar-nav visible-xs">
-							<li class="list-item"><a>#</a></li>
-						</ul>
+							<form class="navbar-form navbar-right form-group">
+								<input type="search" id="search-markers" class="form-control" placeholder="Search by name..." data-bind="textInput: userSearch, event: {keyup: searchMarkers}">
+							</form>
+							<ul id="formList" class="nav navbar-nav visible-xs" data-bind="foreach: filteredMarkers">
+								<li class="list-item"><a data-bind="text: name,  click: $parent.infoMarker, attr: {id: 'list-'+id}"></a></li>
+							</ul>
 					</div>
-				</div>
-			</nav>
-			<ul id="searchList" class="list-group hidden-xs">
-				<li class="list-group-item"><a></a></li>
-			</ul>
+				</nav>
+				<ul id="searchList" class="list-group hidden-xs" data-bind="foreach: filteredMarkers">
+					<li class="list-group-item"><a data-bind="text: name,  click: $parent.infoMarker, attr: {id: 'list-'+id}"></a></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 	<main id="map"></main>
 
-	<script src="js/knockout-3.2.0.js"></script>	
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+	<script src="js/knockout-3.2.0.js"></script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/app.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAy_VQHt28lbfAb2I7r0qqsbL7B69Mroag&callback=initMap" async defer></script>
 </body>
 </html>
