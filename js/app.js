@@ -127,17 +127,8 @@ function initMap() {
     	var infoWindow = new google.maps.InfoWindow({
 			content: "<div class='infoWindow'><h2 class='title'>"+ escapeRooms[i].name +"</h2>"+ phone + site + "<img src='" + streetView + "' /></div>",
     	});
-
-/*
-	    var buttons = document.getElementById('buttons');
-		button = document.createElement('button');
-	    button.textContent = escapeRooms[i].name;
-		button.id = escapeRooms[i].id;
-		button.name = 'inactive';	
-		button.classList.add('btn', 'btn-default', 'btn-lg');
-		var buttonSelected = null;
-		*/
 		
+		/*
 		var itemSelected = null;
 		var listButtons = document.getElementById("listButtons");
 				
@@ -151,24 +142,6 @@ function initMap() {
         itemListB.classList.add('divider');
 		
 		itemList.appendChild(itemListA);
-		
-		/*
-		var node = document.createElement("li");
-		
-		var itemList = document.createElement("a");
-        itemList.textContent = escapeRooms[i].name;
-		itemList.id = 'list'+escapeRooms[i].id;
-		itemList.classList.add('list-group-item');
-		
-		node.appendChild(itemList); 
-		document.getElementById("myList").appendChild(node);
-		*/
-		
-		/*
-        itemList.textContent = escapeRooms[i].name;
-		itemList.id = 'list'+escapeRooms[i].id;
-		itemList.classList.add('list-group-item');
-		*/
 		
 		var itemSelected = null;
 		
@@ -187,46 +160,21 @@ function initMap() {
         	};
       		})(marker, infoWindow));
 
-        // finally, add the element to the list
-        this.listButtons.appendChild(itemList);
-        this.listButtons.appendChild(itemListB);
-
-
-
-/*
-		button.addEventListener('click', (function(currentMarker, infoWindowCopy, buttonCopy) {
-            return function() {	
-				if (buttonSelected !== null) {
-					buttonSelected.classList.remove('active');
-				}
-				buttonCopy.classList.add('active');
-				buttonSelected = document.getElementById(buttonCopy.id);
-				
-          		closeDetails();
-          		infoWindowCopy.open(map, currentMarker);
-          		stopAnimations();
-          		startAnimation(currentMarker);
-            };
-        })(marker, infoWindow, button));
-
-		this.buttons.appendChild(button);
-		
 		*/
 
     	marker.addListener('click', (function(currentMarker, infoWindowCopy){
         	return function(){
 				console.log(currentMarker);
+				
+				/*
 				if (itemSelected !== null) {
 					itemSelected.classList.remove('active');
 				}
 				itemSelected = document.getElementById('list-'+currentMarker.id);
 				itemSelected.classList.add('active');
 				console.log("E " + itemSelected);
-				
-				/*
-				var buttonSelected = document.getElementById(currentMarker.id);
-				buttonSelected.classList.add('active');
 				*/
+				
           		closeDetails();
           		infoWindowCopy.open(map, currentMarker);
           		stopAnimations();
