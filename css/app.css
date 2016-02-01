@@ -37,11 +37,12 @@ body {
 	border-top: 5px solid #30a812;
 }
 
-ul#searchList {
+#searchList {
 	position: absolute;
 	top: 70px;
 	float: left;
 	z-index: 5;
 	width: auto;
 	min-width: 200px;
+	background-color: #000;
 }

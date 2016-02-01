@@ -17,7 +17,7 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<nav class="navbar navbar-default navbar-fixed-top">
+			<nav class="navbar navbar-inverse navbar-fixed-top">
 				<div class="container">
 					<div class="navbar-header">
 						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -29,17 +29,17 @@
 						<a class="navbar-brand" href="#">Escape Rooms in Istanbul</a>
 					</div>
 					<div id="navbar" class="navbar-collapse collapse">
-							<form class="navbar-form navbar-right form-group">
-								<input type="search" id="search-markers" class="form-control" placeholder="Search by name..." data-bind="textInput: userSearch, event: {keyup: searchMarkers}">
-							</form>
-							<ul id="formList" class="nav navbar-nav visible-xs" data-bind="foreach: filteredMarkers">
-								<li class="list-item"><a data-bind="text: name,  click: $parent.infoMarker, attr: {id: 'list-'+id}"></a></li>
-							</ul>
+						<form class="navbar-form navbar-right form-group">
+							<input type="search" id="search-markers" class="form-control" placeholder="Search by name..." data-bind="textInput: userSearch, event: {keyup: searchMarkers}">
+						</form>
+						<ul id="formList" class="nav navbar-nav visible-xs" data-bind="foreach: filteredMarkers">
+							<li class="list-item" data-bind="attr: {id: 'list2-'+id}"><a data-bind="text: name,  click: $parent.infoMarker"></a></li>
+						</ul>
 					</div>
 				</nav>
-				<ul id="searchList" class="list-group hidden-xs" data-bind="foreach: filteredMarkers">
-					<li class="list-group-item"><a data-bind="text: name,  click: $parent.infoMarker, attr: {id: 'list-'+id}"></a></li>
-				</ul>
+				<div id="searchList" class="list-group hidden-xs" data-bind="foreach: filteredMarkers">
+					<a data-bind="text: name,  click: $parent.infoMarker, attr: {id: 'list-'+id}" class="list-group-item"></a>
+				</div>
 			</div>
 		</div>
 	</div>

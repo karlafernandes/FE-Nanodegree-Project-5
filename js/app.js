@@ -109,7 +109,7 @@ var createMarker = function (data) {
 
 var createInfoWindow = function (data) {
     var position = new google.maps.LatLng({lat: data.coordinates.lat, lng: data.coordinates.lng});
-	
+
     this.phone = "<a href='tel:" + data.phone + "' target='_top' class='phone'>" + data.phone + "</a>";
     this.site = "<a href='" + data.site + "' target='_blank' class='site'>" + data.site + "</a>";
     this.streetView = "https://maps.googleapis.com/maps/api/streetview?size=280x100&location=" + data.coordinates.lat + ", " + data.coordinates.lng + "&heading=100&pitch=28&scale=2";
@@ -138,7 +138,9 @@ var ViewModel = function () {
     this.markersList = ko.observableArray();
     this.filteredMarkers = ko.observableArray();
     this.userSearch = ko.observable('');
-	this.infoWindow = ko.observable('');
+    this.infoWindow = ko.observable('');
+    var itemSelected = null;
+    var itemSelected2 = null;
 
     escapeRooms.forEach(function (marker) {
         self.markersList.push(new createMarker(marker));
@@ -146,12 +148,25 @@ var ViewModel = function () {
     });
 
     this.infoMarker = function (marker) {
-	    if (infoWindow) {
-	        infoWindow.close();
-	    }
-		console.log(marker);
+        if (infoWindow) {
+            infoWindow.close();
+        }
+
+        if (itemSelected !== null) {
+            itemSelected.classList.remove('active');
+        }
+        itemSelected = document.getElementById('list-' + marker.id);
+        itemSelected.classList.add('active');
+
+        if (itemSelected2 !== null) {
+            itemSelected2.classList.remove('active');
+        }
+        itemSelected2 = document.getElementById('list2-' + marker.id);
+        itemSelected2.classList.add('active');
+
+        console.log(marker);
         createInfoWindow(marker).open(map);
-		marker.setAnimation(google.maps.Animation.BOUNCE);
+        //marker.setAnimation(google.maps.Animation.BOUNCE);
     };
 
     this.searchMarkers = function () {
@@ -163,10 +178,7 @@ var ViewModel = function () {
                 self.filteredMarkers.push(marker);
             }
         });
-
     };
-
-
 };
 
 ko.applyBindings(new ViewModel());
