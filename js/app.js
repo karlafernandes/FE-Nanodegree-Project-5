@@ -95,8 +95,8 @@ var initMap = function () {
             phone: "+90 (216) 336 11 00",
             site: "http://tuzak.com",
         }
-	];
-	
+    ];
+
     /** Creating Map **/
     var createMap = function () {
         map = new google.maps.Map(document.getElementById('map'), {
