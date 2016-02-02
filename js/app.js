@@ -95,7 +95,7 @@ var initMap = function () {
             phone: "+90 (216) 336 11 00",
             site: "http://tuzak.com",
         }
-    ]
+	];
 
     /** Creating marker with data provided **/
     var createMarker = function (marker) {
