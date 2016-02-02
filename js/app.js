@@ -96,6 +96,27 @@ var initMap = function () {
             site: "http://tuzak.com",
         }
 	];
+	
+    /** Creating Map **/
+    var createMap = function () {
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 13,
+            center: istanbul,
+        });
+
+        escapeRooms.forEach(function (marker) {
+            //console.log(marker);
+            marker.map = map;
+            marker.id = marker.id;
+            marker.name = marker.name;
+            marker.animation = google.maps.Animation.DROP;
+            marker.icon = "images/marker.png";
+            marker.position = new google.maps.LatLng(marker.coordinates.lat, marker.coordinates.lng);
+        });
+
+        infoWindow = new google.maps.InfoWindow();
+        ko.applyBindings(new ViewModel());
+    };	
 
     /** Creating marker with data provided **/
     var createMarker = function (marker) {
@@ -172,15 +193,6 @@ var initMap = function () {
         return infoWindow;
     }
 
-    /** Creating Map **/
-    var createMap = function (idMap, centerMap) {
-        this.map = new google.maps.Map(document.getElementById(idMap, centerMap), {
-            zoom: 13,
-            center: centerMap,
-            mapTypeControl: false
-        });
-    };
-
     var ViewModel = function () {
 
         var self = this;
@@ -249,5 +261,6 @@ var initMap = function () {
         };
     };
 
-    ko.applyBindings(new ViewModel());
+    /** Calling function to create Map **/
+    createMap();
 };
