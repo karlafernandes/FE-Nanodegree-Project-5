@@ -121,26 +121,50 @@ var initMap = function () {
     /** ViewModel **/
     var ViewModel = function () {
 
-
         var self = this;
 
-        createMap("map", istanbul);
-
-        this.markersList = ko.observableArray();
-        this.filteredMarkers = ko.observableArray();
-        this.markersData = ko.observableArray();
-        this.userSearch = ko.observable('');
-        this.infoWindow = ko.observable('');
-        this.currentMarker = ko.observable('');
+        self.userSearch = ko.observable('');
+        self.filteredMarkers = ko.observableArray();
+        self.markersList = [];
 
         var itemSelected = null;
         var itemSelected2 = null;
 
         /** Creating Markers with the escapeRooms list **/
         escapeRooms.forEach(function (marker) {
-            self.markersList.push(new createMarker(marker));
             self.filteredMarkers.push(marker);
         });
+
+        var createMarkers = function (data) {
+
+            var markersArray = [];
+
+            if (self.markersList.length !== 0) {
+                self.markersList.forEach(function (marker) {
+                    marker.setAnimation(undefined);
+                    marker.setIcon("images/marker.png");
+                });
+            }
+
+            data.setAnimation(google.maps.Animation.BOUNCE);
+
+            var position = new google.maps.LatLng({lat: data.coordinates.lat, lng: data.coordinates.lng});
+            var phone = "<a href='tel:" + data.phone + "' target='_top' class='phone'>" + data.phone + "</a>";
+            var site = "<a href='" + data.site + "' target='_blank' class='site'>" + data.site + "</a>";
+            var streetView = "https://maps.googleapis.com/maps/api/streetview?size=280x100&location=" + data.coordinates.lat + ", " + data.coordinates.lng + "&heading=100&pitch=28&scale=2";
+
+            var infoWindowContent = "<div class='infoWindow' id='info-" + data.id + "'><h2 class='title'>" + data.name + "</h2>" + phone + site + "<img src='" + streetView + "' /></div>";
+            infoWindow.setContent(infoWindowContent);
+
+            infoWindow.open(map, data);
+            data.setIcon("images/markerSelected.png");
+            map.setCenter(position);
+
+            infoWindow.addListener('closeclick', function () {
+                data.setAnimation(undefined);
+                data.setIcon("images/marker.png");
+            });
+        };
 
         /** function to close detail windows **/
         this.closeDetails = function (marker) {
