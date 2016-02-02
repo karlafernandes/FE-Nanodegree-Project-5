@@ -1,6 +1,8 @@
 Neighborhood Map Project
 ===============================
 
+[View Project](http://karlafernandes.github.io/FE-Nanodegree-Project-5/)
+
 ## Project Overview
 
 Single page application featuring a map of a neighborhood, which has additional functionality including highlighted locations, third-party data about those locations and various ways to browse the content.
