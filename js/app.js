@@ -1,3 +1,5 @@
+var initMap = function() {
+
 var istanbul = {lat: 41.0099973, lng: 28.9830769};
 
 /** MODEL **/
@@ -105,24 +107,51 @@ var createMarker = function (marker) {
         animation: google.maps.Animation.DROP,
         icon: "images/marker.png"
     });
-	createInfoWindow(marker);
+	//createInfoWindow(marker);
+	
+	var position = new google.maps.LatLng({lat: marker.coordinates.lat, lng: marker.coordinates.lng});
+	
+    this.phone = "<a href='tel:" + marker.phone + "' target='_top' class='phone'>" + marker.phone + "</a>";
+    this.site = "<a href='" + marker.site + "' target='_blank' class='site'>" + marker.site + "</a>";
+    this.streetView = "https://maps.googleapis.com/maps/api/streetview?size=280x100&location=" + marker.coordinates.lat + ", " + marker.coordinates.lng + "&heading=100&pitch=28&scale=2";
+
+    infoWindow = new google.maps.InfoWindow({
+        content: "<div class='infoWindow' id='info-" + marker.id + "'><h2 class='title'>" + marker.name + "</h2>" + this.phone + this.site + "<img src='" + this.streetView + "' /></div>",
+        position: {lat: (marker.coordinates.lat + 0.0065), lng: marker.coordinates.lng}
+    });
 
 	/** Closing infoWindow and opening the one clicked **/
 	this.marker.addListener('click', function() {
 		if (infoWindow) {
             infoWindow.close();
+			//this.currentMarker(marker);
+			this.setIcon("images/marker.png"); 
+			this.setAnimation(null);
         }
+		map.setCenter(this.position);
 		createInfoWindow(marker).open(map);
-		createAnimation(this);
-		//this.setAnimation(google.maps.Animation.BOUNCE);
-		//createAnimation(this.marker);
+		this.setIcon("images/markerSelected.png"); 
+		this.setAnimation(google.maps.Animation.BOUNCE);
+		//createAnimation(this.marker);	
 	});
 }
+
+// function to Stop animating the markers
+var stopAnimations = function() {
+    for (var i in escapes) {
+        escapes[i].setAnimation(null);
+    }
+};
+
+// functions to Start animating the markers
+var startAnimation = function(marker) {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+};
 
 /** Trying to create animation - always an error: Uncaught TypeError: Cannot read property 'setAnimation' of undefined **/
 var createAnimation = function (marker) {
 	console.log(marker);
-	marker.setAnimation(google.maps.Animation.BOUNCE);
+	//marker.setAnimation(google.maps.Animation.BOUNCE);
 }
 
 /** Creating infoWindows with data from Array and Streetview **/
@@ -138,6 +167,8 @@ var createInfoWindow = function (marker) {
         position: {lat: (marker.coordinates.lat + 0.0065), lng: marker.coordinates.lng}
     });
 
+	createAnimation(this);
+	
     return infoWindow;
 }
 
@@ -161,6 +192,8 @@ var ViewModel = function () {
     this.markersData = ko.observableArray();
     this.userSearch = ko.observable('');
     this.infoWindow = ko.observable('');
+	this.currentMarker = ko.observable('');
+
     var itemSelected = null;
     var itemSelected2 = null;
 
@@ -171,6 +204,7 @@ var ViewModel = function () {
     });
 
 	/** Closing infoWindown and exchanging Class to style on the lists the marker selected **/
+	/*
     this.infoMarker = function (marker) {
         if (infoWindow) {
             infoWindow.close();
@@ -189,9 +223,23 @@ var ViewModel = function () {
         itemSelected2.classList.add('active');
 
         createInfoWindow(marker).open(map);
-		createAnimation(this);
     };
-
+	*/
+	
+	// function to close detail windows
+	this.closeDetails = function(marker) {
+	    escapeRooms.forEach(function (marker) {
+			var markerName = document.getElementById('list-' + marker.id);
+			markerName.setIcon("images/marker.png"); 
+			markerName.setAnimation(null);
+			console.log(markerName);
+			if (markerName) {
+				markerName.close();
+			}
+	    });
+	};
+	
+	
 	/** Filtering the lists of escape rooms **/
     this.searchMarkers = function () {
         self.filteredMarkers.removeAll();
@@ -205,3 +253,4 @@ var ViewModel = function () {
 };
 
 ko.applyBindings(new ViewModel());
+};
