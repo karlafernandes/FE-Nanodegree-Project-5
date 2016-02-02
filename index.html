@@ -36,16 +36,16 @@
 							<li class="list-item" data-bind="attr: {id: 'list2-'+id}"><a data-bind="text: name,  click: $parent.infoMarker"></a></li>
 						</ul>
 					</div>
-				</nav>
-				<div id="searchList" class="list-group hidden-xs" data-bind="foreach: filteredMarkers">
-					<a data-bind="text: name,  click: $parent.infoMarker, attr: {id: 'list-'+id}" class="list-group-item"></a>
 				</div>
+			</nav>
+			<div id="searchList" class="list-group hidden-xs" data-bind="foreach: filteredMarkers">
+				<a data-bind="text: name,  click: $parent.infoMarker, attr: {id: 'list-'+id}" class="list-group-item"></a>
 			</div>
 		</div>
 	</div>
 	<main id="map"></main>
 
-	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places" async defer></script>
 	<script src="js/knockout-3.2.0.js"></script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
