@@ -3,6 +3,15 @@ Neighborhood Map Project
 
 [View Project](http://karlafernandes.github.io/FE-Nanodegree-Project-5/)
 
+## List of things that could be improved
+
+* filter the markers when the list is filtered by search
+* animate marker when clicked on it or in the list
+* add a button to clear filter done by search
+* show different icon on the selected marker
+* add [instagram.com](http://www.instagram.com) pictures with #tag name from the place
+
+
 ## Project Overview
 
 Single page application featuring a map of a neighborhood, which has additional functionality including highlighted locations, third-party data about those locations and various ways to browse the content.
