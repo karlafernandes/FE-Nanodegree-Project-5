@@ -113,12 +113,15 @@ var createMarker = function (marker) {
             infoWindow.close();
         }
 		createInfoWindow(marker).open(map);
+		createAnimation(this);
+		//this.setAnimation(google.maps.Animation.BOUNCE);
 		//createAnimation(this.marker);
 	});
 }
 
 /** Trying to create animation - always an error: Uncaught TypeError: Cannot read property 'setAnimation' of undefined **/
 var createAnimation = function (marker) {
+	console.log(marker);
 	marker.setAnimation(google.maps.Animation.BOUNCE);
 }
 
@@ -186,6 +189,7 @@ var ViewModel = function () {
         itemSelected2.classList.add('active');
 
         createInfoWindow(marker).open(map);
+		createAnimation(this);
     };
 
 	/** Filtering the lists of escape rooms **/

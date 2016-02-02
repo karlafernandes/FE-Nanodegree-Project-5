@@ -10,7 +10,7 @@ body {
 }
 
 .title {
-	color: #30a812;
+	color: #00bb88;
 	font-size: 22px;
 	font-weight: bold;
 	margin: 0 0 10px 0;
@@ -34,7 +34,7 @@ body {
 
 .infoWindow img {
 	margin-top: 10px;
-	border-top: 5px solid #30a812;
+	border-top: 5px solid #00bb88;
 }
 
 #searchList {
