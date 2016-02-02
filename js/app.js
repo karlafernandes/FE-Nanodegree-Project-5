@@ -201,12 +201,18 @@ var initMap = function () {
         this.searchMarkers = function () {
             self.filteredMarkers.removeAll();
             var query = this.userSearch().toLowerCase();
-            return escapeRooms.filter(function (marker) {
+            self.markersList.forEach(function (marker) {
+                marker.setMap(null);
+            });
+            self.markersList = [];
+            escapeRooms.filter(function (marker) {
                 if (marker.name.toLowerCase().indexOf(query) >= 0) {
                     self.filteredMarkers.push(marker);
                 }
             });
+            self.setMarkers();
         };
+
     };
 
     /** Calling function to create Map **/
