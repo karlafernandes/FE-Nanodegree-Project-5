@@ -139,7 +139,7 @@ var initMap = function () {
 
             var markersArray = [];
 
-			/** Testing active marker to add/remove class at lists **/
+            /** Testing active marker to add/remove class at lists **/
             if (self.markersList.length !== 0) {
                 self.markersList.forEach(function (marker) {
                     marker.setAnimation(undefined);
@@ -147,17 +147,17 @@ var initMap = function () {
                 });
             }
 
-	        if (itemSelected !== null) {
-	            itemSelected.classList.remove('active');
-	        }
-	        itemSelected = document.getElementById('list-' + marker.id);
-	        itemSelected.classList.add('active');
+            if (itemSelected !== null) {
+                itemSelected.classList.remove('active');
+            }
+            itemSelected = document.getElementById('list-' + marker.id);
+            itemSelected.classList.add('active');
 
-	        if (itemSelected2 !== null) {
-	            itemSelected2.classList.remove('active');
-	        }
-	        itemSelected2 = document.getElementById('list2-' + marker.id);
-	        itemSelected2.classList.add('active');
+            if (itemSelected2 !== null) {
+                itemSelected2.classList.remove('active');
+            }
+            itemSelected2 = document.getElementById('list2-' + marker.id);
+            itemSelected2.classList.add('active');
 
             marker.setAnimation(google.maps.Animation.BOUNCE);
 
@@ -179,7 +179,7 @@ var initMap = function () {
             });
         };
 
-		/** Setting markers function on click **/
+        /** Setting markers function on click **/
         self.setMarkers = function () {
             for (var i = 0; i < self.filteredMarkers().length; i++) {
                 var marker = new google.maps.Marker(self.filteredMarkers()[i]);
@@ -201,20 +201,20 @@ var initMap = function () {
             console.log(marker);
 
             /*
-			var position = new google.maps.LatLng({lat: marker.coordinates.lat, lng: marker.coordinates.lng});
-            var phone = "<a href='tel:" + marker.phone + "' target='_top' class='phone'>" + marker.phone + "</a>";
-            var site = "<a href='" + marker.site + "' target='_blank' class='site'>" + marker.site + "</a>";
-            var streetView = "https://maps.googleapis.com/maps/api/streetview?size=280x100&location=" + marker.coordinates.lat + ", " + marker.coordinates.lng + "&heading=100&pitch=28&scale=2";
+             var position = new google.maps.LatLng({lat: marker.coordinates.lat, lng: marker.coordinates.lng});
+             var phone = "<a href='tel:" + marker.phone + "' target='_top' class='phone'>" + marker.phone + "</a>";
+             var site = "<a href='" + marker.site + "' target='_blank' class='site'>" + marker.site + "</a>";
+             var streetView = "https://maps.googleapis.com/maps/api/streetview?size=280x100&location=" + marker.coordinates.lat + ", " + marker.coordinates.lng + "&heading=100&pitch=28&scale=2";
 
-            var infoWindow = new google.maps.InfoWindow({
-                content: "<div class='infoWindow' id='info-" + marker.id + "'><h2 class='title'>" + marker.name + "</h2>" + phone + site + "<img src='" + streetView + "' /></div>",
-            });
+             var infoWindow = new google.maps.InfoWindow({
+             content: "<div class='infoWindow' id='info-" + marker.id + "'><h2 class='title'>" + marker.name + "</h2>" + phone + site + "<img src='" + streetView + "' /></div>",
+             });
 
-            infoWindow.open(map, marker);
-            marker.setIcon("images/markerSelected.png");
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-            map.setCenter(position);
-			*/
+             infoWindow.open(map, marker);
+             marker.setIcon("images/markerSelected.png");
+             marker.setAnimation(google.maps.Animation.BOUNCE);
+             map.setCenter(position);
+             */
         };
 
 
