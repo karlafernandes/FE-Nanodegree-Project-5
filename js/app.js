@@ -95,6 +95,7 @@ var escapeRooms = [
     }
 ]
 
+/** Creating marker with data provided **/
 var createMarker = function (marker) {
     this.marker = new google.maps.Marker({
         id: marker.id,
@@ -106,18 +107,22 @@ var createMarker = function (marker) {
     });
 	createInfoWindow(marker);
 
+	/** Closing infoWindow and opening the one clicked **/
 	this.marker.addListener('click', function() {
 		if (infoWindow) {
             infoWindow.close();
         }
 		createInfoWindow(marker).open(map);
+		//createAnimation(this.marker);
 	});
 }
 
+/** Trying to create animation - always an error: Uncaught TypeError: Cannot read property 'setAnimation' of undefined **/
 var createAnimation = function (marker) {
 	marker.setAnimation(google.maps.Animation.BOUNCE);
 }
 
+/** Creating infoWindows with data from Array and Streetview **/
 var createInfoWindow = function (marker) {
     var position = new google.maps.LatLng({lat: marker.coordinates.lat, lng: marker.coordinates.lng});
 
@@ -133,6 +138,7 @@ var createInfoWindow = function (marker) {
     return infoWindow;
 }
 
+/** Creating Map **/
 var createMap = function (idMap, centerMap) {
     this.map = new google.maps.Map(document.getElementById(idMap, centerMap), {
         zoom: 13,
@@ -155,11 +161,13 @@ var ViewModel = function () {
     var itemSelected = null;
     var itemSelected2 = null;
 
+	/** Creating Markers with the escapeRooms list **/
     escapeRooms.forEach(function (marker) {
         self.markersList.push(new createMarker(marker));
         self.filteredMarkers.push(marker);
     });
 
+	/** Closing infoWindown and exchanging Class to style on the lists the marker selected **/
     this.infoMarker = function (marker) {
         if (infoWindow) {
             infoWindow.close();
@@ -180,6 +188,7 @@ var ViewModel = function () {
         createInfoWindow(marker).open(map);
     };
 
+	/** Filtering the lists of escape rooms **/
     this.searchMarkers = function () {
         self.filteredMarkers.removeAll();
         var query = this.userSearch().toLowerCase();
