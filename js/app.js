@@ -166,6 +166,23 @@ var initMap = function () {
             });
         };
 
+        /** This enables to also display the infowindow from the list view **/
+        this.showDetails = function (marker) {
+            var position = new google.maps.LatLng({lat: marker.coordinates.lat, lng: marker.coordinates.lng});
+            var phone = "<a href='tel:" + marker.phone + "' target='_top' class='phone'>" + marker.phone + "</a>";
+            var site = "<a href='" + marker.site + "' target='_blank' class='site'>" + marker.site + "</a>";
+            var streetView = "https://maps.googleapis.com/maps/api/streetview?size=280x100&location=" + marker.coordinates.lat + ", " + marker.coordinates.lng + "&heading=100&pitch=28&scale=2";
+
+            var infoWindow = new google.maps.InfoWindow({
+                content: "<div class='infoWindow' id='info-" + marker.id + "'><h2 class='title'>" + marker.name + "</h2>" + phone + site + "<img src='" + streetView + "' /></div>",
+            });
+
+            infoWindow.open(map, marker);
+            marker.setIcon("images/markerSelected.png");
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+            map.setCenter(position);
+        };
+
         /** function to close detail windows **/
         this.closeDetails = function (marker) {
             escapeRooms.forEach(function (marker) {
