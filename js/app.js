@@ -116,84 +116,11 @@ var initMap = function () {
 
         infoWindow = new google.maps.InfoWindow();
         ko.applyBindings(new ViewModel());
-    };	
-
-    /** Creating marker with data provided **/
-    var createMarker = function (marker) {
-        this.marker = new google.maps.Marker({
-            id: marker.id,
-            position: new google.maps.LatLng(marker.coordinates.lat, marker.coordinates.lng),
-            map: map,
-            title: marker.name,
-            animation: google.maps.Animation.DROP,
-            icon: "images/marker.png"
-        });
-        //createInfoWindow(marker);
-
-        var position = new google.maps.LatLng({lat: marker.coordinates.lat, lng: marker.coordinates.lng});
-
-        this.phone = "<a href='tel:" + marker.phone + "' target='_top' class='phone'>" + marker.phone + "</a>";
-        this.site = "<a href='" + marker.site + "' target='_blank' class='site'>" + marker.site + "</a>";
-        this.streetView = "https://maps.googleapis.com/maps/api/streetview?size=280x100&location=" + marker.coordinates.lat + ", " + marker.coordinates.lng + "&heading=100&pitch=28&scale=2";
-
-        infoWindow = new google.maps.InfoWindow({
-            content: "<div class='infoWindow' id='info-" + marker.id + "'><h2 class='title'>" + marker.name + "</h2>" + this.phone + this.site + "<img src='" + this.streetView + "' /></div>",
-            position: {lat: (marker.coordinates.lat + 0.0065), lng: marker.coordinates.lng}
-        });
-
-        /** Closing infoWindow and opening the one clicked **/
-        this.marker.addListener('click', function () {
-            if (infoWindow) {
-                infoWindow.close();
-                //this.currentMarker(marker);
-                this.setIcon("images/marker.png");
-                this.setAnimation(null);
-            }
-            map.setCenter(this.position);
-            createInfoWindow(marker).open(map);
-            this.setIcon("images/markerSelected.png");
-            this.setAnimation(google.maps.Animation.BOUNCE);
-            //createAnimation(this.marker);
-        });
-    }
-
-// function to Stop animating the markers
-    var stopAnimations = function () {
-        for (var i in escapes) {
-            escapes[i].setAnimation(null);
-        }
     };
 
-// functions to Start animating the markers
-    var startAnimation = function (marker) {
-        marker.setAnimation(google.maps.Animation.BOUNCE);
-    };
-
-    /** Trying to create animation - always an error: Uncaught TypeError: Cannot read property 'setAnimation' of undefined **/
-    var createAnimation = function (marker) {
-        console.log(marker);
-        //marker.setAnimation(google.maps.Animation.BOUNCE);
-    }
-
-    /** Creating infoWindows with data from Array and Streetview **/
-    var createInfoWindow = function (marker) {
-        var position = new google.maps.LatLng({lat: marker.coordinates.lat, lng: marker.coordinates.lng});
-
-        this.phone = "<a href='tel:" + marker.phone + "' target='_top' class='phone'>" + marker.phone + "</a>";
-        this.site = "<a href='" + marker.site + "' target='_blank' class='site'>" + marker.site + "</a>";
-        this.streetView = "https://maps.googleapis.com/maps/api/streetview?size=280x100&location=" + marker.coordinates.lat + ", " + marker.coordinates.lng + "&heading=100&pitch=28&scale=2";
-
-        infoWindow = new google.maps.InfoWindow({
-            content: "<div class='infoWindow'><h2 class='title'>" + marker.name + "</h2>" + this.phone + this.site + "<img src='" + this.streetView + "' /></div>",
-            position: {lat: (marker.coordinates.lat + 0.0065), lng: marker.coordinates.lng}
-        });
-
-        createAnimation(this);
-
-        return infoWindow;
-    }
-
+    /** ViewModel **/
     var ViewModel = function () {
+
 
         var self = this;
 
@@ -215,27 +142,7 @@ var initMap = function () {
             self.filteredMarkers.push(marker);
         });
 
-        /** Closing infoWindown and exchanging Class to style on the lists the marker selected **/
-        /*
-         this.infoMarker = function (marker) {
-         if (infoWindow) {
-         infoWindow.close();
-         }
-         if (itemSelected !== null) {
-         itemSelected.classList.remove('active');
-         }
-         itemSelected = document.getElementById('list-' + marker.id);
-         itemSelected.classList.add('active');
-         if (itemSelected2 !== null) {
-         itemSelected2.classList.remove('active');
-         }
-         itemSelected2 = document.getElementById('list2-' + marker.id);
-         itemSelected2.classList.add('active');
-         createInfoWindow(marker).open(map);
-         };
-         */
-
-        // function to close detail windows
+        /** function to close detail windows **/
         this.closeDetails = function (marker) {
             escapeRooms.forEach(function (marker) {
                 var markerName = document.getElementById('list-' + marker.id);
