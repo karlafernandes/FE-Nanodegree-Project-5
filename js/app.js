@@ -130,15 +130,16 @@ var initMap = function () {
         var itemSelected = null;
         var itemSelected2 = null;
 
-        /** Creating Markers with the escapeRooms list **/
+        /** Creating List of markers **/
         escapeRooms.forEach(function (marker) {
             self.filteredMarkers.push(marker);
         });
 
-        var createMarkers = function (data) {
+        var createMarkers = function (marker) {
 
             var markersArray = [];
 
+			/** Testing active marker to add/remove class at lists **/
             if (self.markersList.length !== 0) {
                 self.markersList.forEach(function (marker) {
                     marker.setAnimation(undefined);
@@ -146,29 +147,61 @@ var initMap = function () {
                 });
             }
 
-            data.setAnimation(google.maps.Animation.BOUNCE);
+	        if (itemSelected !== null) {
+	            itemSelected.classList.remove('active');
+	        }
+	        itemSelected = document.getElementById('list-' + marker.id);
+	        itemSelected.classList.add('active');
 
-            var position = new google.maps.LatLng({lat: data.coordinates.lat, lng: data.coordinates.lng});
-            var phone = "<a href='tel:" + data.phone + "' target='_top' class='phone'>" + data.phone + "</a>";
-            var site = "<a href='" + data.site + "' target='_blank' class='site'>" + data.site + "</a>";
-            var streetView = "https://maps.googleapis.com/maps/api/streetview?size=280x100&location=" + data.coordinates.lat + ", " + data.coordinates.lng + "&heading=100&pitch=28&scale=2";
+	        if (itemSelected2 !== null) {
+	            itemSelected2.classList.remove('active');
+	        }
+	        itemSelected2 = document.getElementById('list2-' + marker.id);
+	        itemSelected2.classList.add('active');
 
-            var infoWindowContent = "<div class='infoWindow' id='info-" + data.id + "'><h2 class='title'>" + data.name + "</h2>" + phone + site + "<img src='" + streetView + "' /></div>";
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+
+            var position = new google.maps.LatLng({lat: marker.coordinates.lat, lng: marker.coordinates.lng});
+            var phone = "<a href='tel:" + marker.phone + "' target='_top' class='phone'>" + marker.phone + "</a>";
+            var site = "<a href='" + marker.site + "' target='_blank' class='site'>" + marker.site + "</a>";
+            var streetView = "https://maps.googleapis.com/maps/api/streetview?size=280x100&location=" + marker.coordinates.lat + ", " + marker.coordinates.lng + "&heading=100&pitch=28&scale=2";
+
+            var infoWindowContent = "<div class='infoWindow' id='info-" + marker.id + "'><h2 class='title'>" + marker.name + "</h2>" + phone + site + "<img src='" + streetView + "' /></div>";
             infoWindow.setContent(infoWindowContent);
 
-            infoWindow.open(map, data);
-            data.setIcon("images/markerSelected.png");
+            infoWindow.open(map, marker);
+            marker.setIcon("images/markerSelected.png");
             map.setCenter(position);
 
             infoWindow.addListener('closeclick', function () {
-                data.setAnimation(undefined);
-                data.setIcon("images/marker.png");
+                marker.setAnimation(undefined);
+                marker.setIcon("images/marker.png");
             });
         };
 
-        /** This enables to also display the infowindow from the list view **/
-        this.showDetails = function (marker) {
-            var position = new google.maps.LatLng({lat: marker.coordinates.lat, lng: marker.coordinates.lng});
+		/** Setting markers function on click **/
+        self.setMarkers = function () {
+            for (var i = 0; i < self.filteredMarkers().length; i++) {
+                var marker = new google.maps.Marker(self.filteredMarkers()[i]);
+                marker.addListener('click', (function (marker, i) {
+                    return function () {
+                        createMarkers(marker);
+                    };
+                })(marker, i));
+                self.markersList.push(marker);
+            }
+        };
+        self.setMarkers();
+
+        /** Displays information of marker selected on the lists **/
+        self.infoMarker = function (marker) {
+            var markerIndex = self.filteredMarkers().indexOf(marker);
+            var markerObject = self.markersList[markerIndex];
+            createMarkers(markerObject);
+            console.log(marker);
+
+            /*
+			var position = new google.maps.LatLng({lat: marker.coordinates.lat, lng: marker.coordinates.lng});
             var phone = "<a href='tel:" + marker.phone + "' target='_top' class='phone'>" + marker.phone + "</a>";
             var site = "<a href='" + marker.site + "' target='_blank' class='site'>" + marker.site + "</a>";
             var streetView = "https://maps.googleapis.com/maps/api/streetview?size=280x100&location=" + marker.coordinates.lat + ", " + marker.coordinates.lng + "&heading=100&pitch=28&scale=2";
@@ -181,19 +214,7 @@ var initMap = function () {
             marker.setIcon("images/markerSelected.png");
             marker.setAnimation(google.maps.Animation.BOUNCE);
             map.setCenter(position);
-        };
-
-        /** function to close detail windows **/
-        this.closeDetails = function (marker) {
-            escapeRooms.forEach(function (marker) {
-                var markerName = document.getElementById('list-' + marker.id);
-                markerName.setIcon("images/marker.png");
-                markerName.setAnimation(null);
-                console.log(markerName);
-                if (markerName) {
-                    markerName.close();
-                }
-            });
+			*/
         };
 
 
