@@ -104,7 +104,18 @@ var createMarker = function (marker) {
         animation: google.maps.Animation.DROP,
         icon: "images/marker.png"
     });
-    createInfoWindow(marker);
+	createInfoWindow(marker);
+
+	this.marker.addListener('click', function() {
+		if (infoWindow) {
+            infoWindow.close();
+        }
+		createInfoWindow(marker).open(map);
+	});
+}
+
+var createAnimation = function (marker) {
+	marker.setAnimation(google.maps.Animation.BOUNCE);
 }
 
 var createInfoWindow = function (marker) {
@@ -119,7 +130,6 @@ var createInfoWindow = function (marker) {
         position: {lat: (marker.coordinates.lat + 0.0065), lng: marker.coordinates.lng}
     });
 
-	//marker.setAnimation(google.maps.Animation.BOUNCE);
     return infoWindow;
 }
 
@@ -139,6 +149,7 @@ var ViewModel = function () {
 
     this.markersList = ko.observableArray();
     this.filteredMarkers = ko.observableArray();
+    this.markersData = ko.observableArray();
     this.userSearch = ko.observable('');
     this.infoWindow = ko.observable('');
     var itemSelected = null;
@@ -172,7 +183,6 @@ var ViewModel = function () {
     this.searchMarkers = function () {
         self.filteredMarkers.removeAll();
         var query = this.userSearch().toLowerCase();
-
         return escapeRooms.filter(function (marker) {
             if (marker.name.toLowerCase().indexOf(query) >= 0) {
                 self.filteredMarkers.push(marker);
