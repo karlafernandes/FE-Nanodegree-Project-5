@@ -1,14 +1,14 @@
-// Google Maps API failure
+/** Google Maps API failure */
 var googleError = function() {
 	$("main").text("There was a problem conecting with Google Maps, please try again.");
 };
 
-// Google Maps API Succeeds
+/** Google Maps API Succeeds */
 var initMap = function () {
 
     var istanbul = {lat: 41.0099973, lng: 28.9830769};
 
-    /** MODEL **/
+    /** MODEL */
     var escapeRooms = [
         {
             id: "istrapped",
@@ -103,7 +103,7 @@ var initMap = function () {
         }
     ];
 
-    /** Creating Map **/
+    /** Creating Map */
     var createMap = function () {
         map = new google.maps.Map(document.getElementById('map'), {
             zoom: 13,
@@ -124,46 +124,41 @@ var initMap = function () {
         ko.applyBindings(new ViewModel());
     };
 
-    /** ViewModel **/
+    /** ViewModel */
     var ViewModel = function () {
 
         var self = this;
 
         self.userSearch = ko.observable('');
         self.filteredMarkers = ko.observableArray();
-        self.markersList = [];
+		self.itemSelected = ko.observable();
+		self.markersList = [];
 
-        var itemSelected = null;
-        var itemSelected2 = null;
-
-        /** Creating List of markers **/
+        /** Creating List of markers */
         escapeRooms.forEach(function (marker) {
             self.filteredMarkers.push(marker);
         });
 
+		/** Selecting item on menu lists */
+		self.isSelected = function(marker) {
+	        var selectedMarker = self.itemSelected();
+	        if(selectedMarker) {
+	            return self.itemSelected() == marker;
+	        }
+	    }
+
+		/** Creating Markers */
         var createMarkers = function (marker) {
 
             var markersArray = [];
 
-            /** Testing active marker to add/remove class at lists **/
+            /** Testing active marker to add/remove class at lists */
             if (self.markersList.length !== 0) {
                 self.markersList.forEach(function (marker) {
                     marker.setAnimation(undefined);
                     marker.setIcon("images/marker.png");
                 });
             }
-
-            if (itemSelected !== null) {
-                itemSelected.classList.remove('active');
-            }
-            itemSelected = document.getElementById('list-' + marker.id);
-            itemSelected.classList.add('active');
-
-            if (itemSelected2 !== null) {
-                itemSelected2.classList.remove('active');
-            }
-            itemSelected2 = document.getElementById('list2-' + marker.id);
-            itemSelected2.classList.add('active');
 
             marker.setAnimation(google.maps.Animation.BOUNCE);
 
@@ -185,7 +180,7 @@ var initMap = function () {
             });
         };
 
-        /** Setting markers function on click **/
+        /** Setting markers function on click */
         self.setMarkers = function () {
             for (var i = 0; i < self.filteredMarkers().length; i++) {
                 var marker = new google.maps.Marker(self.filteredMarkers()[i]);
@@ -199,12 +194,14 @@ var initMap = function () {
         };
         self.setMarkers();
 
-        /** Displays information of marker selected on the lists **/
+        /** Displays information of marker selected on the lists */
         self.infoMarker = function (marker) {
             var markerIndex = self.filteredMarkers().indexOf(marker);
             var markerObject = self.markersList[markerIndex];
             createMarkers(markerObject);
-            console.log(marker);
+
+			/** Change CSS on the list */
+			self.itemSelected(marker.id);
 
             /*
              var position = new google.maps.LatLng({lat: marker.coordinates.lat, lng: marker.coordinates.lng});
@@ -222,7 +219,7 @@ var initMap = function () {
              map.setCenter(position);
              */
 
-			/** Toogling mobile menu when clicked on the list **/
+			/** Toggling mobile menu when clicked on the list */
 			$(document).on('click','.navbar-collapse.in',function(e) {
 			    if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
 			        $(this).collapse('hide');
@@ -232,7 +229,7 @@ var initMap = function () {
         };
 
 
-        /** Filtering the lists of escape rooms **/
+        /** Filtering the lists of escape rooms */
         self.searchMarkers = function () {
             self.filteredMarkers.removeAll();
             var query = this.userSearch().toLowerCase();
@@ -250,6 +247,6 @@ var initMap = function () {
 
     };
 
-    /** Calling function to create Map **/
+    /** Calling function to create Map */
     createMap();
 };
