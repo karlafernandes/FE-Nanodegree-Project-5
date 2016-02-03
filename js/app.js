@@ -221,11 +221,19 @@ var initMap = function () {
              marker.setAnimation(google.maps.Animation.BOUNCE);
              map.setCenter(position);
              */
+
+			/** Toogling mobile menu when clicked on the list **/
+			$(document).on('click','.navbar-collapse.in',function(e) {
+			    if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
+			        $(this).collapse('hide');
+			    }
+			});
+			
         };
 
 
         /** Filtering the lists of escape rooms **/
-        this.searchMarkers = function () {
+        self.searchMarkers = function () {
             self.filteredMarkers.removeAll();
             var query = this.userSearch().toLowerCase();
             self.markersList.forEach(function (marker) {
