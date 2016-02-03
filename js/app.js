@@ -115,7 +115,6 @@ var initMap = function () {
             marker.map = map;
             marker.id = marker.id;
             marker.name = marker.name;
-            marker.animation = google.maps.Animation.DROP;
             marker.icon = "images/marker.png";
             marker.position = new google.maps.LatLng(marker.coordinates.lat, marker.coordinates.lng);
         });
@@ -136,6 +135,7 @@ var initMap = function () {
 
         /** Creating List of markers */
         escapeRooms.forEach(function (marker) {
+			//marker.setAnimation(google.maps.Animation.DROP);
             self.filteredMarkers.push(marker);
         });
 
@@ -155,7 +155,7 @@ var initMap = function () {
             /** Testing active marker to add/remove class at lists */
             if (self.markersList.length !== 0) {
                 self.markersList.forEach(function (marker) {
-                    marker.setAnimation(undefined);
+                    marker.setAnimation(null);
                     marker.setIcon("images/marker.png");
                 });
             }
@@ -175,7 +175,7 @@ var initMap = function () {
             map.setCenter(position);
 
             infoWindow.addListener('closeclick', function () {
-                marker.setAnimation(undefined);
+                marker.setAnimation(null);
                 marker.setIcon("images/marker.png");
             });
         };
@@ -203,22 +203,6 @@ var initMap = function () {
 			/** Change CSS on the list */
 			self.itemSelected(marker.id);
 
-            /*
-             var position = new google.maps.LatLng({lat: marker.coordinates.lat, lng: marker.coordinates.lng});
-             var phone = "<a href='tel:" + marker.phone + "' target='_top' class='phone'>" + marker.phone + "</a>";
-             var site = "<a href='" + marker.site + "' target='_blank' class='site'>" + marker.site + "</a>";
-             var streetView = "https://maps.googleapis.com/maps/api/streetview?size=280x100&location=" + marker.coordinates.lat + ", " + marker.coordinates.lng + "&heading=100&pitch=28&scale=2";
-
-             var infoWindow = new google.maps.InfoWindow({
-             content: "<div class='infoWindow' id='info-" + marker.id + "'><h2 class='title'>" + marker.name + "</h2>" + phone + site + "<img src='" + streetView + "' /></div>",
-             });
-
-             infoWindow.open(map, marker);
-             marker.setIcon("images/markerSelected.png");
-             marker.setAnimation(google.maps.Animation.BOUNCE);
-             map.setCenter(position);
-             */
-
 			/** Toggling mobile menu when clicked on the list */
 			$(document).on('click','.navbar-collapse.in',function(e) {
 			    if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
@@ -228,6 +212,23 @@ var initMap = function () {
 			
         };
 
+        /** Show every marker */
+        self.showMarkers = function () {
+            self.filteredMarkers.removeAll();
+            self.markersList.forEach(function (marker) {
+                marker.setMap(null);
+				marker.setAnimation(null);
+				console.log("1");
+            });
+            self.markersList = [];
+            escapeRooms.filter(function (marker) {
+           		self.filteredMarkers.push(marker);
+            });
+            self.setMarkers();
+
+			document.getElementById('search-markers').value = '';
+			document.getElementById('search-button').classList.add('disabled');			
+        };
 
         /** Filtering the lists of escape rooms */
         self.searchMarkers = function () {
@@ -243,6 +244,8 @@ var initMap = function () {
                 }
             });
             self.setMarkers();
+		
+			document.getElementById('search-button').classList.remove('disabled');			
         };
 
     };

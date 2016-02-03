@@ -1,14 +1,12 @@
 Neighborhood Map Project
 ===============================
 
-[View Project](http://karlafernandes.github.io/FE-Nanodegree-Project-5/)
+* If you want to see the project online [click here](http://karlafernandes.github.io/FE-Nanodegree-Project-5/)
+* If you download the source, please open index.html in a browser
 
 ## List of things that could be improved
 
-* filter the markers when the list is filtered by search
-* animate marker when clicked on it or in the list
-* add a button to clear filter done by search
-* show different icon on the selected marker
+* Drop at the start and no animation on filter list
 * add [instagram.com](http://www.instagram.com) pictures with #tag name from the place
 
 

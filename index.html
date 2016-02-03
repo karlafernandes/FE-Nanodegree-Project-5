@@ -31,6 +31,7 @@
 					<div id="navbar" class="navbar-collapse collapse">
 						<form class="navbar-form navbar-right form-group">
 							<input type="search" id="search-markers" class="form-control" placeholder="Search by name..." data-bind="textInput: userSearch, event: {keyup: searchMarkers}">
+							<button type="button" id="search-button" class="btn btn-default disabled" data-bind="click: showMarkers">show all</button>
 						</form>
 						<ul id="formList" class="nav navbar-nav visible-xs" data-bind="foreach: filteredMarkers">
 							<li class="list-item" data-bind="css: { active: $parent.isSelected(id) }"><a data-bind="text: name,  click: $parent.infoMarker"></a></li>
