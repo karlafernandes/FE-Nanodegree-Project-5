@@ -1,3 +1,9 @@
+// Google Maps API failure
+var googleError = function() {
+	$("main").text("There was a problem conecting with Google Maps, please try again.");
+};
+
+// Google Maps API Succeeds
 var initMap = function () {
 
     var istanbul = {lat: 41.0099973, lng: 28.9830769};
