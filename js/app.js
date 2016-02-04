@@ -108,6 +108,13 @@ var initMap = function () {
         map = new google.maps.Map(document.getElementById('map'), {
             zoom: 13,
             center: istanbul,
+		    mapTypeControl: false,
+		    scaleControl: true,
+		    streetViewControl: false,
+		    zoomControl: true,
+		    zoomControlOptions: {
+		        position: google.maps.ControlPosition.RIGHT_CENTER
+		    },
         });
 
         escapeRooms.forEach(function (marker) {
