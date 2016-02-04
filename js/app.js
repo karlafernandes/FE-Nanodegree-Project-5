@@ -118,7 +118,6 @@ var initMap = function () {
         });
 
         escapeRooms.forEach(function (marker) {
-            //console.log(marker);
             marker.map = map;
             marker.id = marker.id;
             marker.name = marker.name;
@@ -132,12 +131,13 @@ var initMap = function () {
 
     /** ViewModel */
     var ViewModel = function () {
-
+		
         var self = this;
 
         self.userSearch = ko.observable('');
         self.filteredMarkers = ko.observableArray();
 		self.itemSelected = ko.observable();
+		self.instagramState = ko.observable(true);
 		self.markersList = [];
 
         /** Creating List of markers */
@@ -148,8 +148,7 @@ var initMap = function () {
 
 		/** Selecting item on menu lists */
 		self.isSelected = function(marker) {
-	        var selectedMarker = self.itemSelected();
-	        if(selectedMarker) {
+	        if(self.itemSelected()) {
 	            return self.itemSelected() == marker;
 	        }
 	    }
@@ -176,12 +175,31 @@ var initMap = function () {
 
             var infoWindowContent = "<div class='infoWindow' id='info-" + marker.id + "'><h2 class='title'>" + marker.name + "</h2>" + phone + site + "<img src='" + streetView + "' /></div>";
             infoWindow.setContent(infoWindowContent);
-
+			
+			/** Showing Instagram Pictures */
+			if (self.instagramState) {
+				$("#instagram").animate({height: 'toggle'}, "slow");
+				self.instagramState = false;
+				
+				/** Change CSS on the list */
+				self.itemSelected(marker.id);
+			}
+			
             infoWindow.open(map, marker);
             marker.setIcon("images/markerSelected.png");
             map.setCenter(position);
 
             infoWindow.addListener('closeclick', function () {
+				
+				/** Hiding Instagram Pictures */
+				if (!self.instagramState) {
+					$("#instagram").animate({height: 'toggle'}, "slow");
+					self.instagramState = true;
+					
+					/** Change CSS on the list */
+					self.itemSelected(null);
+				}
+								
                 marker.setAnimation(null);
                 marker.setIcon("images/marker.png");
             });
@@ -216,7 +234,6 @@ var initMap = function () {
 			        $(this).collapse('hide');
 			    }
 			});
-			
         };
 
         /** Show every marker */
@@ -225,7 +242,6 @@ var initMap = function () {
             self.markersList.forEach(function (marker) {
                 marker.setMap(null);
 				marker.setAnimation(null);
-				console.log("1");
             });
             self.markersList = [];
             escapeRooms.filter(function (marker) {

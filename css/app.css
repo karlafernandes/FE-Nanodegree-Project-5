@@ -57,6 +57,7 @@ body {
 	overflow-x: scroll;
 	background-color: #000;
 	padding: 10px;
+	display: none;
 }
 
 #instagram a {
