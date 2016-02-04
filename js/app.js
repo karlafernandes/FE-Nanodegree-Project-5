@@ -6,7 +6,7 @@ var googleError = function() {
 /** Google Maps API Succeeds */
 var initMap = function () {
 
-    var istanbul = {lat: 41.0099973, lng: 28.9830769};
+    var istanbul = {lat: 41.0189379, lng: 28.9780248};
 
     /** MODEL */
     var escapeRooms = [
@@ -176,37 +176,43 @@ var initMap = function () {
             var infoWindowContent = "<div class='infoWindow' id='info-" + marker.id + "'><h2 class='title'>" + marker.name + "</h2>" + phone + site + "<img src='" + streetView + "' /></div>";
             infoWindow.setContent(infoWindowContent);
 			
-			/** Showing Instagram Pictures */
-			if (self.instagramState) {
-				$("#instagram").animate({height: 'toggle'}, "slow");
-				self.instagramState = false;
-				
-				/** Change CSS on the list */
-				self.itemSelected(marker.id);
-			}
+			self.showInstagram(marker.id);
 			
             infoWindow.open(map, marker);
             marker.setIcon("images/markerSelected.png");
             map.setCenter(position);
 
             infoWindow.addListener('closeclick', function () {
-				
-				/** Hiding Instagram Pictures */
-				if (!self.instagramState) {
-					$("#instagram").animate({height: 'toggle'}, "slow");
-					self.instagramState = true;
-					
-					/** Change CSS on the list */
-					self.itemSelected(null);
-				}
-								
+				self.hideInstagram();				
                 marker.setAnimation(null);
                 marker.setIcon("images/marker.png");
             });
         };
 
+		self.showInstagram = function (marker) {
+			/** Showing Instagram Pictures */
+			if (self.instagramState) {
+				$("#instagram").animate({height: 'toggle'}, "slow");
+				self.instagramState = false;
+				
+				/** Change CSS on the list */
+				self.itemSelected(marker);
+			}
+		}
+		
+		self.hideInstagram = function () {
+			/** Hiding Instagram Pictures */
+			if (!self.instagramState) {
+				$("#instagram").animate({height: 'toggle'}, "slow");
+				self.instagramState = true;
+				
+				/** Change CSS on the list */
+				self.itemSelected(null);
+			}
+		}		
+
         /** Setting markers function on click */
-        self.setMarkers = function () {
+        self.setMarkers = function () {			
             for (var i = 0; i < self.filteredMarkers().length; i++) {
                 var marker = new google.maps.Marker(self.filteredMarkers()[i]);
                 marker.addListener('click', (function (marker, i) {
@@ -238,11 +244,14 @@ var initMap = function () {
 
         /** Show every marker */
         self.showMarkers = function () {
+	
+			self.hideInstagram();
             self.filteredMarkers.removeAll();
             self.markersList.forEach(function (marker) {
                 marker.setMap(null);
 				marker.setAnimation(null);
             });
+			map.setCenter(istanbul);
             self.markersList = [];
             escapeRooms.filter(function (marker) {
            		self.filteredMarkers.push(marker);
@@ -254,7 +263,9 @@ var initMap = function () {
         };
 
         /** Filtering the lists of escape rooms */
-        self.searchMarkers = function () {
+        self.searchMarkers = function () {	
+	
+			self.hideInstagram();		
             self.filteredMarkers.removeAll();
             var query = this.userSearch().toLowerCase();
             self.markersList.forEach(function (marker) {
