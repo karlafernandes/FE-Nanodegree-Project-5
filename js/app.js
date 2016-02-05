@@ -243,7 +243,7 @@ var initMap = function () {
                     var photos = dataFourSq.photos.groups[0].items;
                     for (var i = 0; i < photos.length; i++) {
                         if (photos[i].visibility == "public") {
-                            self.photosFourSq.push(bestPhoto.prefix + "250x250" + bestPhoto.suffix);
+                            self.photosFourSq.push(photos[i].prefix + "250x250" + photos[i].suffix);
                         }
                     }
                 },
