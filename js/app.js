@@ -122,134 +122,207 @@ var initMap = function () {
             }
         });
 
-    escapeRooms.forEach(function (marker) {
-        marker.map = map;
-        marker.id = marker.id;
-        marker.name = marker.name;
-        marker.icon = "images/marker.png";
-        marker.position = new google.maps.LatLng(marker.coordinates.lat, marker.coordinates.lng);
-    });
+        escapeRooms.forEach(function (marker) {
+            marker.map = map;
+            marker.id = marker.id;
+            marker.name = marker.name;
+            marker.icon = "images/marker.png";
+            marker.position = new google.maps.LatLng(marker.coordinates.lat, marker.coordinates.lng);
+        });
 
+        infoWindow = new google.maps.InfoWindow();
+        ko.applyBindings(new ViewModel());
     };
-    infoWindow = new google.maps.InfoWindow();
-    ko.applyBindings(new ViewModel());
-};
 
-/** ViewModel */
-var ViewModel = function () {
+    /** ViewModel */
+    var ViewModel = function () {
 
-    var self = this;
+        var self = this;
 
-    self.userSearch = ko.observable('');
-    self.filteredMarkers = ko.observableArray();
-    self.itemSelected = ko.observable();
-    self.FourSqState = ko.observable(true);
-    self.photosFourSq = ko.observableArray();
-    self.markersList = [];
-    self.FourSqUrl = ko.observable();
-    self.markerName = ko.observable();
+        self.userSearch = ko.observable('');
+        self.filteredMarkers = ko.observableArray();
+        self.itemSelected = ko.observable();
+        self.FourSqState = ko.observable(true);
+        self.photosFourSq = ko.observableArray();
+        self.markersList = [];
+        self.FourSqUrl = ko.observable();
+        self.markerName = ko.observable();
 
-    /** Creating List of markers */
-    escapeRooms.forEach(function (marker) {
-//marker.setAnimation(google.maps.Animation.DROP);
-        self.filteredMarkers.push(marker);
-    });
+        /** Creating List of markers */
+        escapeRooms.forEach(function (marker) {
+            //marker.setAnimation(google.maps.Animation.DROP);
+            self.filteredMarkers.push(marker);
+        });
 
-    /** Selecting item on menu lists */
-            return self.itemSelected() == marker;
-    }
+        /** Selecting item on menu lists */
+        self.isSelected = function(marker) {
+            if(self.itemSelected()) {
+                return self.itemSelected() == marker;
+            }
+        }
 
-    /** Creating Markers */
-    var createMarkers = function (marker) {
+        /** Creating Markers */
+        var createMarkers = function (marker) {
 
-        var markersArray = [];
-        var position = new google.maps.LatLng({lat: marker.coordinates.lat, lng: marker.coordinates.lng});
-        var phone = "<a href='tel:" + marker.phone + "' target='_top' class='phone'>" + marker.phone + "</a>";
-        var site = "<a href='" + marker.site + "' target='_blank' class='site'>" + marker.site + "</a>";
-        var fqSite = "<a href='" + self.FourSqUrl + "' target='_blank' class='fqSite'>More details in FourSquare &raquo; </a>";
-        var streetView = "https://maps.googleapis.com/maps/api/streetview?size=280x100&location=" + marker.coordinates.lat + ", " + marker.coordinates.lng + "&heading=100&pitch=28&scale=2";
+            var markersArray = [];
+            var position = new google.maps.LatLng({lat: marker.coordinates.lat, lng: marker.coordinates.lng});
+            var phone = "<a href='tel:" + marker.phone + "' target='_top' class='phone'>" + marker.phone + "</a>";
+            var site = "<a href='" + marker.site + "' target='_blank' class='site'>" + marker.site + "</a>";
+            var fqSite = "<a href='" + self.FourSqUrl + "' target='_blank' class='fqSite'>More details in FourSquare &raquo; </a>";
+            var streetView = "https://maps.googleapis.com/maps/api/streetview?size=280x100&location=" + marker.coordinates.lat + ", " + marker.coordinates.lng + "&heading=100&pitch=28&scale=2";
 
 
-        /** Testing active marker to add/remove class at lists */
-        if (self.markersList.length !== 0) {
-            self.markersList.forEach(function (marker) {
+            /** Testing active marker to add/remove class at lists */
+            if (self.markersList.length !== 0) {
+                self.markersList.forEach(function (marker) {
+                    marker.setAnimation(null);
+                    marker.setIcon("images/marker.png");
+                });
+            }
+
+            self.markerName(marker.name);
+            self.showFourSq(marker.id);
+
+            var infoWindowContent =  "<div class='infoWindow' id='info-" + marker.id + "'><h2 class='title'>" + marker.name + "</h2>"+ phone + site + "<img class='img-responsive' src='" + streetView + "' alt='" + marker.name + "' />"+ fqSite + "</div>";
+            infoWindow.setContent(infoWindowContent);
+
+
+            self.picsFourSq(marker);
+            infoWindow.open(map, marker);
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+            marker.setIcon("images/markerSelected.png");
+            map.setCenter(position);
+
+            infoWindow.addListener('closeclick', function () {
+                self.hideFourSq();
                 marker.setAnimation(null);
                 marker.setIcon("images/marker.png");
             });
-        }
+        };
 
-        self.markerName(marker.name);
-        self.showFourSq(marker.id);
+        self.showFourSq = function (marker) {
+            /** Showing Instagram Pictures */
+            if (self.FourSqState) {
+                $("#foursq").animate({height: 'toggle'}, "slow");
+                self.FourSqState = false;
 
-        infoWindow.setContent(infoWindowContent);
-
-
-        self.picsFourSq(marker);
-        infoWindow.open(map, marker);
-        marker.setAnimation(google.maps.Animation.BOUNCE);
-        marker.setIcon("images/markerSelected.png");
-        map.setCenter(position);
-
-        infoWindow.addListener('closeclick', function () {
-            self.hideFourSq();
-            marker.setAnimation(null);
-            marker.setIcon("images/marker.png");
-        });
-    };
-
-    self.showFourSq = function (marker) {
-        /** Showing Instagram Pictures */
-        if (self.FourSqState) {
-            $("#foursq").animate({height: 'toggle'}, "slow");
-            self.FourSqState = false;
-
-            /** Change CSS on the list */
-            self.itemSelected(marker);
-    }
-
-    self.hideFourSq = function () {
-        /** Hiding Instagram Pictures */
-        if (!self.FourSqState) {
-            $("#foursq").animate({height: 'toggle'}, "slow");
-            self.FourSqState = true;
-
-            /** Change CSS on the list */
-            self.itemSelected(null);
-        }
-    };
-
-    /** Getting pictures from FourSquare */
-    self.picsFourSq = function (marker) {
-        $.ajax({
-            dataType: "json",
-            url: "https://api.foursquare.com/v2/venues/" + marker.fqId + "?client_id=QXOXJTGHTYCPXFKPE32Q0RMTBH1F1WH40EJ3MTEQO422IQCJ&client_secret=J4P4DIUPE2SC4MPLDPF2KZYH1IVKT5UJIJZFEGSII3E5P4RA&v=20130815",
-            success: function (data) {
-
-        }
-                document.getElementById("foursq").innerHTML = "";
-
-                var dataFourSq = data.response.venue;
-
-                self.FourSqUrl = dataFourSq.canonicalUrl;
-
-                /** Removing pictures from array and adding ones from marker selected */
-                self.photosFourSq.removeAll();
-                var photos = dataFourSq.photos.groups[0].items;
-                for (var i = 0; i < photos.length; i++) {
-                    if (photos[i].visibility == "public") {
-                    }
-                }
+                /** Change CSS on the list */
+                self.itemSelected(marker);
             }
+        }
 
+        self.hideFourSq = function () {
+            /** Hiding Instagram Pictures */
+            if (!self.FourSqState) {
+                $("#foursq").animate({height: 'toggle'}, "slow");
+                self.FourSqState = true;
 
+                /** Change CSS on the list */
+                self.itemSelected(null);
+            }
+        };
 
+        /** Getting pictures from FourSquare */
+        self.picsFourSq = function (marker) {
+            $.ajax({
+                dataType: "json",
+                url: "https://api.foursquare.com/v2/venues/" + marker.fqId + "?client_id=QXOXJTGHTYCPXFKPE32Q0RMTBH1F1WH40EJ3MTEQO422IQCJ&client_secret=J4P4DIUPE2SC4MPLDPF2KZYH1IVKT5UJIJZFEGSII3E5P4RA&v=20130815",
+                success: function (data) {
 
+                    document.getElementById("foursq").innerHTML = "";
 
+                    var dataFourSq = data.response.venue;
 
+                    self.FourSqUrl = dataFourSq.canonicalUrl;
 
+                    /** Removing pictures from array and adding ones from marker selected */
+                    self.photosFourSq.removeAll();
+                    var photos = dataFourSq.photos.groups[0].items;
+                    for (var i = 0; i < photos.length; i++) {
+                        if (photos[i].visibility == "public") {
+                            self.photosFourSq.push({ thumb: photos[i].prefix + "250x250" + photos[i].suffix, larger: photos[i].prefix + "830x830" + photos[i].suffix, id: photos[i].suffix.slice(0,-4).replace("/","")});
+                        }
+                    }
+                },
+                error: function (e) {
+                    document.getElementById("foursq").innerHTML = "<h4>Foursquare photos are unavailable. Please try refreshing later.</h4>";
+                }
+            });
+        };
 
+        /** Setting markers function on click */
+        self.setMarkers = function () {
+            for (var i = 0; i < self.filteredMarkers().length; i++) {
+                var marker = new google.maps.Marker(self.filteredMarkers()[i]);
+                marker.addListener('click', (function (marker, i) {
+                    return function () {
+                        createMarkers(marker);
+                    };
+                })(marker, i));
+                self.markersList.push(marker);
+            }
+        };
+        self.setMarkers();
 
+        /** Displays information of marker selected on the lists */
+        self.infoMarker = function (marker) {
+            var markerIndex = self.filteredMarkers().indexOf(marker);
+            var markerObject = self.markersList[markerIndex];
+            createMarkers(markerObject);
+
+            /** Change CSS on the list */
+            self.itemSelected(marker.id);
+
+            /** Toggling mobile menu when clicked on the list */
+            $(document).on('click','.navbar-collapse.in',function(e) {
+                if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
+                    $(this).collapse('hide');
+                }
+            });
+        };
+
+        /** Show every marker */
+        self.showMarkers = function () {
+
+            self.hideFourSq();
+            self.filteredMarkers.removeAll();
+            self.markersList.forEach(function (marker) {
+                marker.setMap(null);
+                marker.setAnimation(null);
+            });
+            map.setCenter(istanbul);
+            self.markersList = [];
+            escapeRooms.filter(function (marker) {
+                self.filteredMarkers.push(marker);
+            });
+            self.setMarkers();
+
+            document.getElementById('search-markers').value = '';
+            document.getElementById('search-button').classList.add('disabled');
+        };
+
+        /** Filtering the lists of escape rooms */
+        self.searchMarkers = function () {
+
+            self.hideFourSq();
+            self.filteredMarkers.removeAll();
+            var query = this.userSearch().toLowerCase();
+            self.markersList.forEach(function (marker) {
+                marker.setMap(null);
+            });
+            self.markersList = [];
+            escapeRooms.filter(function (marker) {
+                if (marker.name.toLowerCase().indexOf(query) >= 0) {
+                    self.filteredMarkers.push(marker);
+                }
+            });
+            self.setMarkers();
+
+            document.getElementById('search-button').classList.remove('disabled');
+        };
 
     };
 
+    /** Calling function to create Map */
+    createMap();
 };
