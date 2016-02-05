@@ -237,13 +237,13 @@ var initMap = function () {
                     self.photosFourSq.removeAll();
                     var bestPhoto = dataFourSq.bestPhoto;
                     if (bestPhoto) {
-                        self.photosFourSq.push(bestPhoto.prefix.slice(0,-1) + bestPhoto.suffix);
+                        self.photosFourSq.push(bestPhoto.prefix + "250x250" + bestPhoto.suffix);
                     }
 
                     var photos = dataFourSq.photos.groups[0].items;
                     for (var i = 0; i < photos.length; i++) {
                         if (photos[i].visibility == "public") {
-                            self.photosFourSq.push(bestPhoto.prefix.slice(0,-1) + bestPhoto.suffix);
+                            self.photosFourSq.push(bestPhoto.prefix + "250x250" + bestPhoto.suffix);
                         }
                     }
                 },
