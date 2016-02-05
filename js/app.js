@@ -168,7 +168,7 @@ var initMap = function () {
             var position = new google.maps.LatLng({lat: marker.coordinates.lat, lng: marker.coordinates.lng});
             var phone = "<a href='tel:" + marker.phone + "' target='_top' class='phone'>" + marker.phone + "</a>";
             var site = "<a href='" + marker.site + "' target='_blank' class='site'>" + marker.site + "</a>";
-            var fqSite = "<br /><a href='" + self.FourSqUrl + "' target='_blank' class='fqSite'>More details in FourSquare &raquo; </a>";
+            var fqSite = "<a href='" + self.FourSqUrl + "' target='_blank' class='fqSite'>More details in FourSquare &raquo; </a>";
             var streetView = "https://maps.googleapis.com/maps/api/streetview?size=280x100&location=" + marker.coordinates.lat + ", " + marker.coordinates.lng + "&heading=100&pitch=28&scale=2";
 
 
@@ -183,7 +183,7 @@ var initMap = function () {
             self.markerName(marker.name);
             self.showFourSq(marker.id);
 
-            var infoWindowContent =  "<div class='infoWindow' id='info-" + marker.id + "'><h2 class='title'>" + marker.name + "</h2>"+ phone + site + "<img src='" + streetView + "' alt='" + marker.name + "' />"+ fqSite + "</div>";
+            var infoWindowContent =  "<div class='infoWindow' id='info-" + marker.id + "'><h2 class='title'>" + marker.name + "</h2>"+ phone + site + "<img class='img-responsive' src='" + streetView + "' alt='" + marker.name + "' />"+ fqSite + "</div>";
             infoWindow.setContent(infoWindowContent);
 
 

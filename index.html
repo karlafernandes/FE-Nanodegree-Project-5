@@ -57,14 +57,16 @@
 						<h3 class="modal-title title" data-bind="text: $parent.markerName"></h3>
 					</div>
 					<div class="modal-body">
-						<img src="" alt="" data-bind="attr: {src: larger, title: $parent.markerName, alt: $parent.markerName }" />
+						<img src="" alt="" class="img-responsive" data-bind="attr: {src: larger, title: $parent.markerName, alt: $parent.markerName }" />
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div id="foursq" data-bind="foreach: photosFourSq">
-		<a href="#" data-toggle="modal" data-target="" data-bind="attr: {'data-target': '#modal-'+id}"><img src="" alt="" data-bind="attr: {src: thumb, title: $parent.markerName, alt: $parent.markerName }" /></a>
+		<a href="#" data-toggle="modal" data-target="" data-bind="attr: {'data-target': '#modal-'+id}">
+			<img src="" alt="" class="img-responsive"  data-bind="attr: {src: thumb, title: $parent.markerName, alt: $parent.markerName }" />
+		</a>
 	</div>
 
 	<main id="map"></main>
