@@ -4,12 +4,6 @@ Neighborhood Map Project
 * If you want to see the project online [click here](http://karlafernandes.github.io/FE-Nanodegree-Project-5/)
 * If you download the source, please open index.html in a browser
 
-## List of things that could be improved
-
-* Drop at the start and no animation on filter list
-* add [instagram.com](http://www.instagram.com) pictures with #tag name from the place
-
-
 ## Project Overview
 
 Single page application featuring a map of a neighborhood, which has additional functionality including highlighted locations, third-party data about those locations and various ways to browse the content.
