@@ -48,20 +48,8 @@
 			</div>
 		</div>
 	</div>
-	<div id="instagram">
-		<a href="#"><img src="images/brand_icon.jpg" alt="#instagrampost" title="#escaperoom" /></a>
-		<a href="#"><img src="images/brand_icon.jpg" alt="#instagrampost" title="#escaperoom" /></a>
-		<a href="#"><img src="images/brand_icon.jpg" alt="#instagrampost" title="#escaperoom" /></a>
-		<a href="#"><img src="images/brand_icon.jpg" alt="#instagrampost" title="#escaperoom" /></a>
-		<a href="#"><img src="images/brand_icon.jpg" alt="#instagrampost" title="#escaperoom" /></a>
-		<a href="#"><img src="images/brand_icon.jpg" alt="#instagrampost" title="#escaperoom" /></a>
-		<a href="#"><img src="images/brand_icon.jpg" alt="#instagrampost" title="#escaperoom" /></a>
-		<a href="#"><img src="images/brand_icon.jpg" alt="#instagrampost" title="#escaperoom" /></a>
-		<a href="#"><img src="images/brand_icon.jpg" alt="#instagrampost" title="#escaperoom" /></a>
-		<a href="#"><img src="images/brand_icon.jpg" alt="#instagrampost" title="#escaperoom" /></a>
-		<a href="#"><img src="images/brand_icon.jpg" alt="#instagrampost" title="#escaperoom" /></a>
-		<a href="#"><img src="images/brand_icon.jpg" alt="#instagrampost" title="#escaperoom" /></a>
-		<a href="#"><img src="images/brand_icon.jpg" alt="#instagrampost" title="#escaperoom" /></a>
+	<div id="foursq" data-bind="foreach: photosFourSq">
+		<a href="#" data-bind="attr: {href: $data}"><img src="" alt="" data-bind="attr: {src: $data, title: $parent.markerName, alt: $parent.markerName }" /></a>
 	</div>
 	<main id="map"></main>
 
@@ -69,8 +57,6 @@
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/app.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer  onerror="googleError()"></script>
-
-<!-- script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAy_VQHt28lbfAb2I7r0qqsbL7B69Mroag&callback=initMap" async defer  onerror="googleError()"></script -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAy_VQHt28lbfAb2I7r0qqsbL7B69Mroag&callback=initMap" async defer  onerror="googleError()"></script>
 </body>
 </html>

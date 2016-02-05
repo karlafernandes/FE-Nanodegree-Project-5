@@ -30,7 +30,13 @@ body {
 }
 
 .site {
+	font-size: 14px;
 	color: #333;
+	font-weight: bold;
+}
+
+.site:hover {
+	color: #00bb88;
 }
 
 .infoWindow img {
@@ -47,7 +53,7 @@ body {
 	background-color: #000;
 }
 
-#instagram {
+#foursq {
 	position:absolute;
 	bottom: 0px;
 	text-align: center;
@@ -60,7 +66,21 @@ body {
 	display: none;
 }
 
-#instagram a {
+#foursq a {
 	display: inline-block;
 	margin: 0 10px 0 0;
+}
+
+.fqSite {
+	text-align: right;
+	display: block;
+	color: #fff;
+	font-weight: bold;
+	background-color: #00bb88;
+	padding: 5px 10px 5px 5px;
+	text-decoration: none !important;
+}
+
+.fqSite:hover {
+	background-color: #000;
 }
