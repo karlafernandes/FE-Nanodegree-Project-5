@@ -159,7 +159,7 @@ var initMap = function () {
             if(self.itemSelected()) {
                 return self.itemSelected() == marker;
             }
-        }
+        };
 
         /** Creating Markers */
         var createMarkers = function (marker) {
@@ -209,7 +209,7 @@ var initMap = function () {
                 /** Change CSS on the list */
                 self.itemSelected(marker);
             }
-        }
+        };
 
         self.hideFourSq = function () {
             /** Hiding Instagram Pictures */
