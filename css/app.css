@@ -84,3 +84,7 @@ body {
 .fqSite:hover {
 	background-color: #000;
 }
+
+.modal-backdrop.in {
+	z-index: -1;
+}
