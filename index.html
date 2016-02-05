@@ -8,13 +8,73 @@
 	<meta name="description" lang="en" content="Single-page application featuring a map with markers to identify popular locations and integrations with third-party APIs" />
 
 	<title>Escape Rooms in Istanbul</title>
-	<link rel="stylesheet" href="css/app.css" />
+	<link rel="stylesheet" href="css/app.min.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/bootstrap.css" />
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
 	<link rel="apple-touch-icon" href="images/brand_icon.jpg" />
 </head>
 <body>
-	<div id="map"></div>
+	<div class="container">
+		<div class="row">
+			<nav class="navbar navbar-inverse navbar-fixed-top">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#">Escape Rooms in Istanbul</a>
+					</div>
+					<div id="navbar" class="navbar-collapse collapse">
+						<form class="navbar-form navbar-right form-horizontal">
+							<div class="input-group">
+								<input type="search" id="search-markers" class="form-control" placeholder="Search by name..." data-bind="textInput: userSearch, event: {keyup: searchMarkers}">
+								<span class="input-group-btn">
+									<button type="button" id="search-button" class="btn btn-default disabled" data-bind="click: showMarkers">show all</button>
+								</span>
+							</div>
+						</form>
+						<ul id="formList" class="nav navbar-nav visible-xs" data-bind="foreach: filteredMarkers">
+							<li class="list-item" data-bind="css: { active: $parent.isSelected(id) }"><a data-bind="text: name,  click: $parent.infoMarker"></a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+			<div id="searchList" class="list-group hidden-xs" data-bind="foreach: filteredMarkers">
+				<a data-bind="text: name,  click: $parent.infoMarker, css: { active: $parent.isSelected(id) }" class="list-group-item"></a>
+			</div>
+		</div>
+	</div>
+	<div id="modal" data-bind="foreach: photosFourSq">
+		<div class="modal fade" id="#" tabindex="-1" role="dialog" data-bind="attr: {id: 'modal-'+id}">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h3 class="modal-title title" data-bind="text: $parent.markerName"></h3>
+					</div>
+					<div class="modal-body">
+						<img src="" alt="" class="img-responsive" data-bind="attr: {src: larger, title: $parent.markerName, alt: $parent.markerName }" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="foursq" data-bind="foreach: photosFourSq">
+		<a href="#" data-toggle="modal" data-target="" data-bind="attr: {'data-target': '#modal-'+id}">
+			<img src="" alt="" class="img-responsive"  data-bind="attr: {src: thumb, title: $parent.markerName, alt: $parent.markerName }" />
+		</a>
+	</div>
+
+	<main id="map"></main>
+
+	<script src="js/knockout-3.2.0.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 	<script src="js/app.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAy_VQHt28lbfAb2I7r0qqsbL7B69Mroag&callback=initMap" async defer></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAy_VQHt28lbfAb2I7r0qqsbL7B69Mroag&callback=initMap" async defer  onerror="googleError()"></script>
 </body>
 </html>
