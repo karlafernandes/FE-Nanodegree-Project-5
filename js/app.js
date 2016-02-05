@@ -235,11 +235,6 @@ var initMap = function () {
 
                     /** Removing pictures from array and adding ones from marker selected */
                     self.photosFourSq.removeAll();
-                    var bestPhoto = dataFourSq.bestPhoto;
-                    if (bestPhoto) {
-                        self.photosFourSq.push(bestPhoto.prefix + "250x250" + bestPhoto.suffix);
-                    }
-
                     var photos = dataFourSq.photos.groups[0].items;
                     for (var i = 0; i < photos.length; i++) {
                         if (photos[i].visibility == "public") {
