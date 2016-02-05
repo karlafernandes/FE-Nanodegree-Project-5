@@ -228,6 +228,8 @@ var initMap = function () {
                 dataType: "json",
                 url: "https://api.foursquare.com/v2/venues/" + marker.fqId + "?client_id=QXOXJTGHTYCPXFKPE32Q0RMTBH1F1WH40EJ3MTEQO422IQCJ&client_secret=J4P4DIUPE2SC4MPLDPF2KZYH1IVKT5UJIJZFEGSII3E5P4RA&v=20130815",
                 success: function (data) {
+	
+					document.getElementById("foursq").innerHTML = "";
 
                     var dataFourSq = data.response.venue;
 
